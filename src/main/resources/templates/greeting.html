@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+    <link th:insert="~{/parts/boostrap.html::head/link}"> <!--Boostrap-->
+</head>
+<body>
+    <div th:insert="~{/parts/navibar.html::naviBar}"></div>
+    <div class="container mt-5" >
+        <h5>Hello, Guest!</h5>
+        <div>Описание проекта.</div>
+    </div>
+    <script th:insert="~{/parts/boostrap.html::script}"></script>
+</body>
+</html>

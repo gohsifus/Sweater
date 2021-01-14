@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Registration</title>
+    <link th:insert="/parts/boostrap.html::head/link">
+</head>
+<body>
+<div th:insert="/parts/navibar.html::naviBar"></div>
+<h5 th:text="${newUser.getUserName()}"></h5>
+<div class="container">
+    <form method="post" th:action="@{/user/profile}">
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label"> Password : </label>
+            <input type="password" name="password" class="form-control" placeholder="password"/>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label"> Email : </label>
+            <input type="email" name="email" class="form-control" placeholder="some@some.com"/>
+        </div>
+        <button type="submit"/>Save</button>
+    </form>
+</div>
+</body>
+</html>

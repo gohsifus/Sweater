@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<div th:fragment="naviBar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Sweater</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/main">Messages</a>
+                </li>
+                <th:block th:each="role : ${#authentication.getAuthorities()}">
+                    <th:block th:if="${role.getAuthority().equals('ADMIN')}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user">User list</a>
+                        </li>
+                    </th:block>
+                </th:block>
+                <th:block th:each="role : ${#authentication.getAuthorities()}">
+                    <th:block th:if="${role.getAuthority().equals('ADMIN') || role.getAuthority().equals('USER')}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user/profile">Profile</a>
+                        </li>
+                    </th:block>
+                </th:block>
+            </ul>
+
+            <div class="nav-text mr-3" href="/user/profile" th:text="${#authentication.getName()}">userName</div>
+
+            <div>
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Sign Out"/>
+                </form>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

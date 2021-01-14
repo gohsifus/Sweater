@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" th:action="@{/user}" th:object="${user}">
+    <!--/*@thymesVar id="user" type="org.example.model.User"*/-->
+    <input type="hidden" th:value="${user.id}" th:field="*{id}">
+    <input type="hidden" th:value="${user.password}" th:field="*{password}">
+    <input type="hidden" th:value="${user.active}" th:field="*{active}">
+    <input type="hidden" th:value="${user.email}" th:field="*{email}">
+
+    <th:block th:if="${user.activationCode != null}">
+        <input type="hidden" th:value="${user.activationCode}" th:field="*{activationCode}">
+    </th:block>
+
+
+    <input type="text" th:value="${user.username}" th:field="*{userName}">
+    <td>
+        <select th:value="${user.roles}" th:field="*{roles}">
+            <option value="ADMIN">ADMIN</option>
+            <option value="USER">USER</option>
+        </select>
+    </td>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>

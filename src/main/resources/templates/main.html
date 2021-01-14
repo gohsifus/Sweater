@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sweater</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/static/style.css">
+
+    <link th:insert="~{/parts/boostrap.html::head/link}"> <!--Boostrap-->
+    <scripts th:insert="~{/parts/boostrap.html::head/script}"></scripts>
+</head>
+<body>
+    <div th:insert="~{/parts/navibar.html::naviBar}"></div>
+
+    <div class="container mt-5" >
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <form class="form-inline" method="get" th:action="@{/main}">
+                    <input class="form-control" type="text" name="filter" placeholder="Тэг" th:value="${filter}">
+                    <button class="ml-2" type="submit">Поиск</button>
+                </form>
+            </div>
+        </div>
+
+        <div><!--Добавление сообщений-->
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Новое сообщение
+            </button>
+            <div class="collapse" th:classappend="${errors == null} ? '' : 'show'" id="collapseExample">
+                <div class="form-group mt-3">
+                    <form method="post" th:action="@{/main}" th:object="${message}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input class="form-control" th:classappend="${errors == null || !errors.containsKey('textError')} ? '' : 'is-invalid'"
+                                   type="text" name="text" placeholder="Введите сообщение" th:field="*{text}">
+                            <th:block th:if="${errors != null && errors.containsKey('textError')}">
+                                <div class="invalid-feedback" th:text="${errors.get('textError')}">
+                                </div>
+                            </th:block>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" th:classappend="${errors == null || !errors.containsKey('tagError')} ? '' : 'is-invalid'"
+                                   type="text" name="tag" placeholder="Тэг" th:field="*{tag}">
+                            <th:block th:if="${errors != null && errors.containsKey('tagError')}">
+                                <div class="invalid-feedback" th:text="${errors.get('tagError')}">
+                                </div>
+                            </th:block>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file" name="file" id="customFile">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                        <button type="submit">Добавить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-columns">
+            <th:block th:each="message : ${messages}">
+                <div class="card my-3">
+                    <div th:if="${message.filename} != null">
+                        <img class="card-img-top" th:src="@{/img/{file}(file = ${message.filename})}">
+                    </div>
+                    <div class="card-body m-2">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text" th:text="${message.text} + ${message.tag}">
+                    </div>
+                    <div class="card-footer text-muted">
+                        <div class="card-text" th:text="${message.getAuthorName()}"></div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</body>
+</html>

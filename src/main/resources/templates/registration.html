@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sweater</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/static/style.css">
+
+    <link th:insert="~{/parts/boostrap.html::head/link}"> <!--Boostrap-->
+    <scripts th:insert="~{/parts/boostrap.html::head/script}"></scripts>
+</head>
+<body>
+<div th:insert="~{/parts/navibar.html::naviBar}"></div>
+
+<h5>Регистрация</h5>
+<div class="container" >
+    <div class="form-group">
+        <form method="post" th:action="@{/registration}" th:object="${user}">
+            <div class="form-group">
+                <label>User name : </label>
+                <input class="form-control" th:classappend="${errors == null || !errors.containsKey('userNameError')} ? '' : 'is-invalid'"
+                       type="text" placeholder="Введите логин" th:field="*{userName}">
+                <th:block th:if="${errors != null && errors.containsKey('userNameError')}">
+                    <div class="invalid-feedback" th:text="${errors.get('userNameError')}">
+                    </div>
+                </th:block>
+            </div>
+            <div class="form-group">
+                <label>Password : </label>
+                <input class="form-control" th:classappend="${errors == null || !errors.containsKey('passwordError')} ? '' : 'is-invalid'"
+                       type="password" placeholder="Пароль" th:field="*{password}">
+                <th:block th:if="${errors != null && errors.containsKey('passwordError')}">
+                    <div class="invalid-feedback" th:text="${errors.get('passwordError')}">
+                    </div>
+                </th:block>
+            </div>
+            <div class="form-group">
+                <label>Confirm password : </label>
+                <input class="form-control" th:classappend="${((errors == null) || !errors.containsKey('password2Error')) && (confirmError == null)} ? '' : 'is-invalid' "
+                       type="password" placeholder="Пароль" th:field="*{password2}">
+                <th:block th:if="${errors != null && errors.containsKey('password2Error')}">
+                    <div class="invalid-feedback" th:text="${errors.get('password2Error')}"></div>
+                </th:block>
+                <th:block th:if="${confirmError != null}">
+                    <div class="invalid-feedback" th:text="${confirmError}"></div>
+                </th:block>
+            </div>
+            <div class="form-group">
+                <label>Email : </label>
+                <input class="form-control" th:classappend="${errors == null || !errors.containsKey('emailError')} ? '' : 'is-invalid'"
+                       type="email" placeholder="some@some.com" th:field="*{email}">
+                <th:block th:if="${errors != null && errors.containsKey('emailError')}">
+                    <div class="invalid-feedback" th:text="${errors.get('emailError')}">
+                    </div>
+                </th:block>
+            </div>
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
