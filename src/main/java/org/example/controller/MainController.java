@@ -28,7 +28,7 @@ public class MainController {
     @Autowired
     private MessageRepo messageRepo;
 
-    @Value(" ${upload.path}")
+    @Value("${upload.path}")
     private String uploadPath;
 
     @GetMapping
